@@ -1,6 +1,8 @@
 import { Inter, Space_Grotesk } from "next/font/google";
+import { AuthProvider } from "./contexts/AuthContext";
 import "./globals.css";
 
+// Fontes do projeto (as mesmas da landing page da Sprint 3)
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -21,7 +23,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body className="min-h-screen bg-base font-sans text-ink antialiased">
-        {children}
+        {/* AuthProvider deixa o usuário logado disponível em todas as páginas */}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

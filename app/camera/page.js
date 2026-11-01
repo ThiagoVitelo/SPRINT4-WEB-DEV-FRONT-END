@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { BookOpen, Check, LogIn } from "lucide-react";
 import AppBar from "../components/layout/AppBar";
 import PhoneFrame from "../components/camera/PhoneFrame";
 import CameraHeader from "../components/camera/CameraHeader";
@@ -13,6 +15,8 @@ import useCameraControls from "../hooks/useCameraControls";
 import useCameraAI from "../hooks/useCameraAI";
 import usePhotoCounter from "../hooks/usePhotoCounter";
 import useToast from "../hooks/useToast";
+import useAuth from "../hooks/useAuth";
+import useEstudos from "../hooks/useEstudos";
 import { baixarResumoPdf } from "../utils/gerarPdf";
 
 // Página pública /camera: simulador da câmera JOVI com o Smart Assist.
@@ -22,6 +26,9 @@ const CameraPage = () => {
   const controles = useCameraControls();
   const { total, registrarFoto } = usePhotoCounter();
   const toast = useToast();
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
+  const { salvar, jaSalvo } = useEstudos();
   const [cena, setCena] = useState(null);
   const [miniatura, setMiniatura] = useState(null);
 
@@ -48,6 +55,15 @@ const CameraPage = () => {
     registrarFoto();
     setMiniatura(cena?.imagem ?? null);
     toast.mostrar("Foto capturada");
+  };
+
+  // salvar o resumo em Meus Estudos (precisa estar logado)
+  const salvarEstudo = () => {
+    if (!isAuthenticated) {
+      router.push("/login");
+      return;
+    }
+    if (salvar(ia.cena)) toast.mostrar("Resumo salvo em Meus Estudos");
   };
 
   const modoDocumento = ["Estudo", "Documento"].includes(controles.modo);
@@ -89,7 +105,7 @@ const CameraPage = () => {
             modo={controles.modo}
             onModo={controles.setModo}
             onCapturar={capturar}
-            onGaleria={() => toast.mostrar("Galeria disponível em breve")}
+            onGaleria={() => router.push("/estudos")}
             onVirar={() => toast.mostrar("Câmera frontal indisponível na demonstração")}
             miniatura={miniatura}
           />
@@ -99,7 +115,22 @@ const CameraPage = () => {
               resumo={ia.cena.resumo}
               onFechar={ia.ignorar}
               onBaixarPdf={() => baixarResumoPdf(ia.cena.resumo)}
-            />
+            >
+              <button
+                type="button"
+                onClick={salvarEstudo}
+                disabled={jaSalvo(ia.cena.slug)}
+                className="flex items-center justify-center gap-1.5 py-1 text-xs font-semibold text-assist disabled:text-success"
+              >
+                {jaSalvo(ia.cena.slug) ? (
+                  <><Check size={14} /> Salvo em Meus Estudos</>
+                ) : isAuthenticated ? (
+                  <><BookOpen size={14} /> Salvar em Meus Estudos</>
+                ) : (
+                  <><LogIn size={14} /> Entrar para salvar em Meus Estudos</>
+                )}
+              </button>
+            </SummarySheet>
           )}
         </PhoneFrame>
 

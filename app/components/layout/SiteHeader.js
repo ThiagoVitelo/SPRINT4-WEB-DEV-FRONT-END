@@ -1,13 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Camera, Menu, X } from "lucide-react";
+import { BookOpen, Camera, LogIn, Menu, X } from "lucide-react";
 import Brand from "./Brand";
 import { NAV_LINKS } from "../../data/landing";
+import useAuth from "../../hooks/useAuth";
 
 // Cabeçalho da landing: menu com as seções (vira menu "sanduíche" em telas menores)
 const SiteHeader = ({ onVerDemo }) => {
   const [menuAberto, setMenuAberto] = useState(false);
+  const { isAuthenticated } = useAuth();
 
   // fecha o menu se a tela crescer (ex.: girar o tablet)
   useEffect(() => {
@@ -53,7 +55,7 @@ const SiteHeader = ({ onVerDemo }) => {
             ))}
           </ul>
 
-          <div className="mt-2 grid gap-3 sm:grid-cols-2 lg:mt-0 lg:flex">
+          <div className="mt-2 grid gap-3 sm:grid-cols-3 lg:mt-0 lg:flex">
             <button
               type="button"
               onClick={() => {
@@ -64,6 +66,9 @@ const SiteHeader = ({ onVerDemo }) => {
             >
               Ver demonstração
             </button>
+            <Link href={isAuthenticated ? "/estudos" : "/login"} className="btn-ghost">
+              {isAuthenticated ? <><BookOpen size={16} /> Meus Estudos</> : <><LogIn size={16} /> Entrar</>}
+            </Link>
             <Link href="/camera" className="btn min-h-11 px-4 text-sm">
               <Camera size={16} /> Experimentar
             </Link>
