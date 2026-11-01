@@ -1,4 +1,5 @@
-import { Play } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Play } from "lucide-react";
 
 // Primeira seção da landing: título, frase de impacto e o visual da lente com IA
 const Hero = ({ onVerDemo }) => {
@@ -15,9 +16,14 @@ const Hero = ({ onVerDemo }) => {
             Da fotografia ao estudo, o JOVI Smart Assist utiliza inteligência artificial para sugerir modos de captura e
             transformar conteúdos visuais em informação organizada.
           </p>
-          <button type="button" onClick={onVerDemo} className="btn">
-            <Play size={18} aria-hidden="true" /> Ver demonstração
-          </button>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Link href="/camera" className="btn">
+              Experimentar a câmera <ArrowUpRight size={18} aria-hidden="true" />
+            </Link>
+            <button type="button" onClick={onVerDemo} className="btn-ghost min-h-13 px-6">
+              <Play size={16} aria-hidden="true" /> Ver demonstração
+            </button>
+          </div>
         </div>
 
         {/* Visual conceitual: lente com órbitas (mesmo desenho da Sprint 3) */}

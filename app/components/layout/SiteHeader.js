@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import Link from "next/link";
+import { Camera, Menu, X } from "lucide-react";
 import Brand from "./Brand";
 import { NAV_LINKS } from "../../data/landing";
 
@@ -52,16 +53,21 @@ const SiteHeader = ({ onVerDemo }) => {
             ))}
           </ul>
 
-          <button
-            type="button"
-            onClick={() => {
-              setMenuAberto(false);
-              onVerDemo();
-            }}
-            className="btn min-h-11 px-4 text-sm"
-          >
-            Ver demonstração
-          </button>
+          <div className="mt-2 grid gap-3 sm:grid-cols-2 lg:mt-0 lg:flex">
+            <button
+              type="button"
+              onClick={() => {
+                setMenuAberto(false);
+                onVerDemo();
+              }}
+              className="btn-ghost"
+            >
+              Ver demonstração
+            </button>
+            <Link href="/camera" className="btn min-h-11 px-4 text-sm">
+              <Camera size={16} /> Experimentar
+            </Link>
+          </div>
         </nav>
       </div>
     </header>
