@@ -1,26 +1,40 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Tema do projeto.
+  Cada variável --color-X vira uma classe do Tailwind: bg-X, text-X, border-X...
+  Ex.: --color-primary  ->  bg-primary, text-primary
+  As cores são as mesmas do style.css da landing page da Sprint 3.
+*/
+@theme {
+  --color-base: #07070b;          /* fundo da página */
+  --color-surface: #0d0d14;       /* fundo das seções alternadas */
+  --color-raised: #12121c;        /* fundo dos cards */
+  --color-ink: #f7f7fb;           /* texto principal */
+  --color-muted: #a4a4b3;         /* texto secundário */
+  --color-primary: #6a00ff;       /* roxo principal */
+  --color-primary-light: #a85cff; /* roxo claro */
+  --color-primary-soft: #c99aff;  /* roxo dos rótulos */
+  --color-success: #73e4ad;
+  --color-danger: #ff9baa;
+
+  /* cores da interface da câmera (protótipo do Figma) */
+  --color-assist: #45c8f5;        /* azul do JOVI Smart Assist */
+  --color-shot: #f7c948;          /* amarelo dos itens ativos */
+
+  --font-sans: var(--font-inter), sans-serif;
+  --font-display: var(--font-space-grotesk), sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* títulos usam a fonte Space Grotesk, como na Sprint 3 */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
 }
