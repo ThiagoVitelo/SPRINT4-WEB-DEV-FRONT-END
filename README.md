@@ -184,6 +184,8 @@ Usamos o assistente de IA como apoio para analisar os requisitos em comparação
 propor a estrutura do projeto seguindo o padrão das aulas, converter os estilos da landing para
 Tailwind CSS e ajuda na criação de alguns hooks personalizados.
 
+No produto: a IA do JOVI Smart Assist é simulada: cada cena da API já traz o modo sugerido e o resumo, e a interface reproduz o fluxo que um modelo de visão computacional real teria.
+
 ## Integrantes
 
 Veja o arquivo [`INTEGRANTES.TXT`](./INTEGRANTES.TXT).
